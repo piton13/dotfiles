@@ -2,8 +2,9 @@
 # a '#' or ';' character indicates
 # a comment
 [core]
-    autocrlf = true
+    autocrlf = input
     editor = vim
+    # logAllRefUpdates = true ;to enable reflogs
 [user]
 	name = Igor Mykhaylyuk
 #    email = igor13luk@gmail.com
@@ -14,6 +15,7 @@
     cp = cherry-pick
 	ci = commit
     cia = commit --amend --no-edit
+    dif = diff HEAD
 	st = status
     review = !bash -c \"git push origin HEAD:refs/for/${1:-develop}\"
     pr = "!branch=\"$(git symbolic-ref HEAD 2> /dev/null | cut -b 12-)\" git pull origin $branch"
