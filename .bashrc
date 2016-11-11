@@ -2,6 +2,7 @@
 export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
 
+alias la='ls -la'
 alias pr='cd -' # returns to the previous working directory
 alias "...=cd ../.."
 alias "....=cd ../../.."
@@ -14,7 +15,6 @@ alias gbl='git branch -l'
 alias gbnm='git branch --no-merged'
 alias gbm='git branch --merged'
 alias gdif='git dif'
-alias la='ls -la'
 alias gs='git status'
 alias gco='git co $1'
 alias gif='git fetch'
@@ -38,3 +38,7 @@ alias ni='npm install'
 alias np='npm prune'
 alias "c=clip"
 alias "v=clip -o"
+
+#THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
+export SDKMAN_DIR="/c/Users/Igor_Mykhaylyuk/.sdkman"
+[[ -s "/c/Users/Igor_Mykhaylyuk/.sdkman/bin/sdkman-init.sh" ]] && source "/c/Users/Igor_Mykhaylyuk/.sdkman/bin/sdkman-init.sh"
