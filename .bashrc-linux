@@ -1,16 +1,30 @@
 # ~/.bashrc: executed by bash(1) for non-login shells.
 # see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
 # for examples
+alias la='ls -la'
+alias pr='cd -' # returns to the previous working directory
+alias "...=cd ../.."
+alias "....=cd ../../.."
+alias ".....=cd ../../../.."
+alias "......=cd ../../../../.."
+
+# usefull alias for git commands
 alias gs='git status'
+alias gif='git fetch'
 alias gil='git log --decorate --oneline'
 alias gst='git stash'
 alias gust='git stash pop'
+alias grba='git rebase --abort'
+alias grbc='git rebase --continue'
+alias grbs='git rebase --skip'
 alias grh='git reset --hard HEAD'
 alias grs='git reset --soft HEAD'
 alias ns='npm start'
+alias nsbr='npm start -- --log --mock'
 alias ni='npm install'
 alias np='npm prune'
 alias nt='npm test'
+alias nv='npm run validate'
 
 # If not running interactively, don't do anything
 case $- in
