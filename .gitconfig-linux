@@ -1,0 +1,37 @@
+# This is the config file, and
+# a '#' or ';' character indicates
+# a comment
+[core]
+     # autocrlf = true
+	editor = vim
+[user]
+	name = Igor Mykhaylyuk
+	email = igor13luk@gmail.com
+[alias]
+    co = checkout
+	br = branch
+    cp = cherry-pick
+	ci = commit
+    cia = commit --amend --no-edit
+	st = status
+    review = !bash -c \"git push origin HEAD:refs/for/${1:-develop}\"
+;    pr = !bash -c \"git symbolic-ref HEAD 2> /dev/null | cut -b 12-\" | git pull --rebase origin $1
+;    rp = !bash -c \"git symbolic-ref HEAD 2> /dev/null | cut -b 12-\" | git push origin $1
+     pr = !bash -c \"git pull $1\"
+     rp = !bash -c \"git push $1\"
+# [merge]
+# tool = sublimerge
+
+# [mergetool "sublimerge"]
+# cmd = subl -n --wait \"$REMOTE\" \"$BASE\" \"$LOCAL\" \"$MERGED\" --command \"sublimerge_diff_views\"
+# trustExitCode = false
+
+# [diff]
+# tool = sublimerge
+
+# [difftool "sublimerge"]
+# cmd = subl -n --wait \"$REMOTE\" \"$LOCAL\" --command \"sublimerge_diff_views {\\\"left_read_only\\\": true, \\\"right_read_only\\\": true}\"
+# ;[push]
+# ;	default = simple
+[pull]
+	rebase = true
