@@ -26,16 +26,23 @@ alias grbc='git rebase --continue'
 alias grbs='git rebase --skip'
 alias grh='git reset --hard HEAD'
 alias grs='git reset --soft HEAD'
+alias gcu='git clean -fd'
+alias gci='git clean -fdx'
 alias gpr='git pull --rebase origin pos_develop'
 alias grp='git rp'
 alias bp='bower prune'
 alias bi='bower install'
+
+# some aliases for npm
+alias ncc='npm cache clean'
+alias ni='npm install'
+alias np='npm prune'
+alias nr='npm run'
 alias ns='npm start'
 # alias nt='node ./run_tests.js'
 alias nt='npm test'
 alias nta='karma start --single-run'
-alias ni='npm install'
-alias np='npm prune'
+
 alias "c=clip"
 alias "v=clip -o"
 

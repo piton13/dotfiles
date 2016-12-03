@@ -23,7 +23,8 @@
     #pr = !bash -c \"git symbolic-ref HEAD 2> /dev/null | cut -b 12- | git pull origin $1\"
 #    rp = !bash -c \"git symbolic-ref HEAD 2> /dev/null | cut -b 12-\" | git push origin $1
 #    pr = !bash -c \"git pull $1\"
-    rp = !bash -c \"git push $1\"
+    rp = !bash -c \"git push origin HEAD\"
+#    rp = !bash -c \"git push $1\"
 #	up = "!git remote update -p; git merge --ff-only @{u}"
 [merge]
 tool = sublimerge
