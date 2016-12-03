@@ -14,11 +14,12 @@
 	ci = commit
     cia = commit --amend --no-edit
 	st = status
+    rbi = !bash -c \"git rebase -i HEAD~$1\"
     review = !bash -c \"git push origin HEAD:refs/for/${1:-develop}\"
 ;    pr = !bash -c \"git symbolic-ref HEAD 2> /dev/null | cut -b 12-\" | git pull --rebase origin $1
 ;    rp = !bash -c \"git symbolic-ref HEAD 2> /dev/null | cut -b 12-\" | git push origin $1
-     pr = !bash -c \"git pull $1\"
-     rp = !bash -c \"git push $1\"
+;    pr = !bash -c \"git pull $1\"
+    rp = !bash -c \"git push origin HEAD\"
 # [merge]
 # tool = sublimerge
 
