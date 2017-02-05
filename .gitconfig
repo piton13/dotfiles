@@ -14,6 +14,7 @@
 	br = branch
     cp = cherry-pick
 	ci = commit
+    ciam = commit --amend
     cia = commit --amend --no-edit
     dif = diff HEAD
 	st = status
