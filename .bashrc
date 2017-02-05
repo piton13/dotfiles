@@ -21,6 +21,7 @@ alias gif='git fetch'
 alias gil='git log --decorate --oneline'
 alias gst='git stash'
 alias gust='git stash pop'
+# alias grbi='git rebase -i HEAD~$1'
 alias grba='git rebase --abort'
 alias grbc='git rebase --continue'
 alias grbs='git rebase --skip'
@@ -42,6 +43,7 @@ alias ns='npm start'
 # alias nt='node ./run_tests.js'
 alias nt='npm test'
 alias nta='karma start --single-run'
+alias nvd='npm version'
 
 alias "c=clip"
 alias "v=clip -o"
