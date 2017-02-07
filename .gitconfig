@@ -18,6 +18,7 @@
     cia = commit --amend --no-edit
     dif = diff HEAD
 	st = status
+    rbi = !bash -c \"git rebase -i HEAD~$1\"
     review = !bash -c \"git push origin HEAD:refs/for/${1:-develop}\"
     pr = "!branch=\"$(git symbolic-ref HEAD 2> /dev/null | cut -b 12-)\" git pull origin $branch"
     #pr = !bash -c \"branch=$(git symbolic-ref HEAD 2> /dev/null | cut -b 12-) git pull origin $branch\"
