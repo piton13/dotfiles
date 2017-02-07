@@ -13,6 +13,8 @@
     cp = cherry-pick
 	ci = commit
     cia = commit --amend --no-edit
+    ciam = commit --amend
+    dif = diff HEAD
 	st = status
     rbi = !bash -c \"git rebase -i HEAD~$1\"
     review = !bash -c \"git push origin HEAD:refs/for/${1:-develop}\"

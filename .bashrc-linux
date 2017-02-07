@@ -8,13 +8,20 @@ alias "....=cd ../../.."
 alias ".....=cd ../../../.."
 alias "......=cd ../../../../.."
 
+# some more ls aliases
+alias ll='ls -alF'
+alias la='ls -A'
+alias l='ls -CF'
+
 # usefull alias for git commands
 # info
 alias gil='git log --decorate --oneline'
+alias gdif='git dif'
 alias gs='git status'
 # branch info
 alias gba='git branch -a'
 alias gbl='git branch -l'
+alias gbr='git branch -r'
 alias gbm='git branch --merged'
 alias gbnm='git branch --no-merged'
 # remote operations
@@ -39,12 +46,15 @@ alias gust='git stash pop'
 alias ncc='npm cache clean'
 alias nci='np && ncc && ni'
 alias ni='npm install'
+alias nl='npm list --depth=${1:-0}'
 alias np='npm prune'
 alias nr='npm run'
 alias ns='npm start'
 alias nsbr='npm start -- --log --mock'
 alias nt='npm test'
 alias nv='npm run validate'
+alias nvf='npm run lintfix'
+alias nvd='npm version'
 
 # If not running interactively, don't do anything
 case $- in
@@ -134,11 +144,6 @@ fi
 
 # colored GCC warnings and errors
 #export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
-
-# some more ls aliases
-alias ll='ls -alF'
-alias la='ls -A'
-alias l='ls -CF'
 
 # Add an "alert" alias for long running commands.  Use like so:
 #   sleep 10; alert
