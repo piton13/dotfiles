@@ -27,7 +27,7 @@ alias gbm='git branch --merged'
 alias gbnm='git branch --no-merged'
 # remote operations
 alias gif='git fetch'
-alias gpr='git pull --rebase origin master'
+alias gpr='git pull --rebase origin pos_develop'
 alias grp='git rp'
 # rebase
 alias grbi='git rbi'
