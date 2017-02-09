@@ -17,6 +17,7 @@ alias l='ls -CF'
 # usefull alias for git commands
 # info
 alias gil='git log --decorate --oneline'
+alias gilm='git log --decorate --oneline --author="Igor Mykhaylyuk" --graph --no-merges'
 alias gdif='git dif'
 alias gs='git status'
 # branch info
