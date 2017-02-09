@@ -35,6 +35,11 @@ alias grbi='git rbi'
 alias grba='git rebase --abort'
 alias grbc='git rebase --continue'
 alias grbs='git rebase --skip'
+# cherry-pick
+alias gcp='git cherry-pick'
+alias gcpa='git cherry-pick --abort'
+alias gcpc='git cherry-pick --continue'
+alias gcpq='git cherry-pick --quit'
 # reset
 alias gci='git clean -dfx' # remove whole ignored files and untracked
 alias gcu='git clean -df' # remove whole untracked files
