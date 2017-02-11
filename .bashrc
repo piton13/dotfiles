@@ -18,6 +18,13 @@ alias l='ls -CF'
 # info
 alias gil='git log --decorate --oneline'
 alias gilm='git log --decorate --oneline --author="Igor Mykhaylyuk" --graph --no-merges'
+    # add <branch_name> to see commits of specified branch
+    # add -<number> to see last <number> commits
+    # use --grep="<text>" to see commits with specified text
+    # --stat option displays the number of insertions and deletions to each file
+    # gil -- <file_name> to see commits to specified file or files
+    # -S"<text>" to see commit with specified added or removed text
+    # gil master..feature to see commits which exist in feature branch but not exist in master
 alias gdif='git dif'
 alias gs='git status'
 # branch info
