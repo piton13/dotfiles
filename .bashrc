@@ -35,7 +35,8 @@ alias gbm='git branch --merged'
 alias gbnm='git branch --no-merged'
 # remote operations
 alias gif='git fetch'
-alias gpr='git pull --rebase origin pos_develop'
+alias gifb='git fetch origin $branch'
+alias gpr='git pull --rebase origin $(git symbolic-ref HEAD 2> /dev/null | cut -b 12-)'
 alias grp='git rp'
 # rebase
 alias grbi='git rbi'
@@ -43,15 +44,16 @@ alias grba='git rebase --abort'
 alias grbc='git rebase --continue'
 alias grbs='git rebase --skip'
 # cherry-pick
-alias gcp='git cherry-pick'
-alias gcpa='git cherry-pick --abort'
-alias gcpc='git cherry-pick --continue'
-alias gcpq='git cherry-pick --quit'
+alias gcp='git cp'
+alias gcpa='git cp --abort'
+alias gcpc='git cp --continue'
+alias gcpq='git cp --quit'
 # reset
 alias gci='git clean -dfx' # remove whole ignored files and untracked
 alias gcu='git clean -df' # remove whole untracked files
 alias grh='git reset --hard HEAD'
 alias grs='git reset --soft HEAD'
+alias grst='git reset HEAD $path'
 # stash
 alias gst='git stash'
 alias gust='git stash pop'
