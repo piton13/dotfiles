@@ -28,7 +28,8 @@ call vundle#begin()
 
 " let Vundle manage Vundle, required
 Plugin 'VundleVim/Vundle.vim'
-
+" emmet-vim plugin
+Plugin 'mattn/emmet-vim'
 " The following are examples of different formats supported.
 " Keep Plugin commands between vundle#begin/end.
 " plugin on GitHub repo
@@ -153,3 +154,6 @@ set tabstop=4
 set shiftwidth=4
 set softtabstop=4
 set expandtab
+
+" configuration of emmet-vim
+let g:user_emmet_leader_key='<Tab>'
