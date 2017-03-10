@@ -157,3 +157,5 @@ set expandtab
 
 " configuration of emmet-vim
 let g:user_emmet_leader_key='<Tab>'
+" remapping of ex commangs
+cnoremap <expr> %% getcmdtype() == ':' ? expand('%:h').'/' : '%%'
