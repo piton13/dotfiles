@@ -26,10 +26,26 @@ call vundle#begin()
 " alternatively, pass a path where Vundle should install plugins
 "call vundle#begin('~/some/path/here')
 
+" ============================ LIST OF PLUGINS ===============================
+" (just put path after github.com/ and before # inside of the single quotes)
 " let Vundle manage Vundle, required
 Plugin 'VundleVim/Vundle.vim'
+" Color Dracula theme
+Plugin 'dracula/vim'
 " emmet-vim plugin
 Plugin 'mattn/emmet-vim'
+" editorconfig vim plugin
+Plugin 'editorconfig/editorconfig-vim'
+" vim-jsbeautify
+Plugin 'maksimr/vim-jsbeautify'
+" Syntax checking plugin
+Plugin 'vim-syntastic/syntastic'
+" TypeScript syntax for Vim
+Plugin 'leafgarland/typescript-vim'
+" SCSS lint checker
+Plugin 'gcorne/vim-sass-lint'
+" angular2 snippets
+" Plugin 'mhartington/vim-angular2-snippets'
 " The following are examples of different formats supported.
 " Keep Plugin commands between vundle#begin/end.
 " plugin on GitHub repo
@@ -46,6 +62,7 @@ Plugin 'mattn/emmet-vim'
 " Install L9 and avoid a Naming conflict if you've already installed a
 " different version somewhere else.
 " Plugin 'ascenator/L9', {'name': 'newL9'}
+" ===================== END LIST ====================================
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -145,17 +162,70 @@ if has('langmap') && exists('+langnoremap')
   set langnoremap
 endif
 
+" enable Dracula theme
+" syntax on
+" color dracula
+let &t_ti.="\e[1 q"
+let &t_SI.="\e[5 q"
+let &t_EI.="\e[1 q"
+let &t_te.="\e[0 q"
+
 set hlsearch
 
 set number
 
+filetype indent on
+" set filetype=html (ft=html)
 set smartindent
 set tabstop=4
 set shiftwidth=4
 set softtabstop=4
 set expandtab
 
-" configuration of emmet-vim
+" ==================== Configuration Plugins Global variables =====================
+" configuration of emmet-vim (Use Tab+, for expansion)
 let g:user_emmet_leader_key='<Tab>'
+" configuration of editorconfig vim plugin (commented because does not work)
+" let g:EditorConfig_exec_path = '~/.editorconfig'
+" configuration of editorconfig for jsBeautifier (commented because does not work)
+" let g:EditorConfig_exec_path = '~/.editorconfig'
+" configuration of js-beautify plugin
+map <c-f> :call JsBeautify()<cr>
+autocmd FileType javascript noremap <buffer>  <c-f> :call JsBeautify()<cr>
+" for json
+autocmd FileType json noremap <buffer> <c-f> :call JsonBeautify()<cr>
+" for html
+autocmd FileType html noremap <buffer> <c-f> :call HtmlBeautify()<cr>
+" for css or scss
+autocmd FileType css noremap <buffer> <c-f> :call CSSBeautify()<cr>
+autocmd FileType javascript vnoremap <buffer>  <c-f> :call RangeJsBeautify()<cr>
+autocmd FileType json vnoremap <buffer> <c-f> :call RangeJsonBeautify()<cr>
+autocmd FileType html vnoremap <buffer> <c-f> :call RangeHtmlBeautify()<cr>
+autocmd FileType css vnoremap <buffer> <c-f> :call RangeCSSBeautify()<cr>
+" CONFIGURATION FOR SYNTASTIC PLUGIN
+" Run:
+"     :SyntasticInfo to see available checkers
+"     :SyntasticCheck to invoke syntax check on the current file
+"     :Errors to move between lines with errors
+"     :lnext or :lprev to jump between lines with errors
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+let g:syntastic_javascript_checkers = ['jshint', 'eslint']
+let g:syntastic_typescript_checkers = ['tsc', 'tslint']
+" let g:syntastic_typescript_tslint_args = "--config ~/tslint.json"
+let g:typescript_compiler_binary = 'tsc'
+autocmd FileType typescript :set makeprg=tsc
+autocmd QuickFixCmdPost [^l]* nested cwindow
+autocmd QuickFixCmdPost    l* nested lwindow
+" let g:syntastic_html_checkers
+let g:syntastic_scss_checkers=["sasslint"]
+
+" ==================== Keys Remapping ================================
 " remapping of ex commangs
 cnoremap <expr> %% getcmdtype() == ':' ? expand('%:h').'/' : '%%'
