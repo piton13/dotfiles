@@ -19,6 +19,7 @@ trim_trailing_whitespace = true
 
 [**.md]
 trim_trailing_whitespace = false
+path=~/.vim/bundle/vim-jsbeautify/plugin/lib/js/lib/beautify-html.js
 
 # Rules for HTML files
 # [*.html]
@@ -30,6 +31,10 @@ indent_size = 2
 # Rules for JavaScript files
 [**.js,**.ts,**.es6]
 insert_final_newline = true
+; path to optional external js beautifier, default is vim-jsbeautify/plugin/lib
+path=~/.vim/bundle/vim-jsbeautify/plugin/lib/js/lib/beautify.js
+; ; Javascript interpreter to be invoked by default 'node'
+bin=node
 
 # Tab indentation (no size specified)
 # [Makefile]
