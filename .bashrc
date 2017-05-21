@@ -1,6 +1,8 @@
 # This is comments for the file
 export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
+BASH_THEME="honukai"
+
 
 alias la='ls -la'
 alias pr='cd -' # returns to the previous working directory
@@ -33,11 +35,15 @@ alias gbl='git branch -l'
 alias gbr='git branch -r'
 alias gbm='git branch --merged'
 alias gbnm='git branch --no-merged'
+# branch operations
+alias gmb='git branch -m $(git symbolic-ref HEAD 2> /dev/null | cut -b 12-) $newbranch'
+alias gcpd='git co pos_develop'
 # remote operations
 alias gif='git fetch'
 alias gifb='git fetch origin $branch'
 alias gpr='git pull --rebase origin $(git symbolic-ref HEAD 2> /dev/null | cut -b 12-)'
 alias grp='git rp'
+alias grrb='git push origin :$(git symbolic-ref HEAD 2> /dev/null | cut -b 12-)'
 # rebase
 alias grbi='git rbi'
 alias grba='git rebase --abort'
@@ -52,17 +58,20 @@ alias gcpq='git cp --quit'
 alias gci='git clean -dfx' # remove whole ignored files and untracked
 alias gcu='git clean -df' # remove whole untracked files
 alias grh='git reset --hard HEAD'
+alias grl='git reset --hard HEAD~1'
 alias grs='git reset --soft HEAD'
 alias grst='git reset HEAD $path'
 # stash
 alias gst='git stash'
 alias gust='git stash pop'
+# gerrit
+alias ggr='git review franchise'
 
-# some aliases for npm
+# SOME ALIASES FOR NPM
 alias ncc='npm cache clean'
 alias nci='np && ncc && ni'
 alias ni='npm install'
-alias nl='npm list --depth=${1:-0}'
+alias nl='npm list --depth=${1:-0}' # linux command
 alias np='npm prune'
 alias nr='npm run'
 alias ns='npm start'
@@ -80,3 +89,6 @@ alias "v=clip -o"
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
 export SDKMAN_DIR="/c/Users/Igor_Mykhaylyuk/.sdkman"
 [[ -s "/c/Users/Igor_Mykhaylyuk/.sdkman/bin/sdkman-init.sh" ]] && source "/c/Users/Igor_Mykhaylyuk/.sdkman/bin/sdkman-init.sh"
+
+# to add colors for status line
+export TERM=xterm-256color

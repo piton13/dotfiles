@@ -1,23 +1,14 @@
-
-" An example for a vimrc file.
-"
-" Maintainer:	Bram Moolenaar <Bram@vim.org>
-" Last change:	2015 Mar 24
-"
-" To use it, copy it to
-"     for Unix and OS/2:  ~/.vimrc
-"	      for Amiga:  s:.vimrc
+"  for Unix and OS/2:  ~/.vimrc
+"  for Amiga:  s:.vimrc
 "  for MS-DOS and Win32:  $VIM\_vimrc
-"	    for OpenVMS:  sys$login:.vimrc
+"  for OpenVMS:  sys$login:.vimrc
 
 " When started as "evim", evim.vim will already have done these settings.
 if v:progname =~? "evim"
   finish
 endif
 
-" Use Vim settings, rather than Vi settings (much better!).
-" This must be first, because it changes other options as a side effect.
-set nocompatible              " be iMproved, required
+set nocompatible              " be iMproved, required (to use VIM settings rather than VI)
 filetype off                  " required
 
 " set the runtime path to include Vundle and initialize
@@ -30,6 +21,15 @@ call vundle#begin()
 " (just put path after github.com/ and before # inside of the single quotes)
 " let Vundle manage Vundle, required
 Plugin 'VundleVim/Vundle.vim'
+" NERD tree to explore filesystem
+Plugin 'scrooloose/nerdtree'
+" Lightline.vim - for configuration of statusline/tabline
+" Plugin 'itchyny/lightline.vim'
+" Fonts for lightline configuration
+Plugin 'powerline/fonts'
+" Plugin for status line stylization
+Plugin 'vim-airline/vim-airline'
+Plugin 'vim-airline/vim-airline-themes'
 " Color Dracula theme
 Plugin 'dracula/vim'
 " emmet-vim plugin
@@ -44,14 +44,22 @@ Plugin 'vim-syntastic/syntastic'
 Plugin 'leafgarland/typescript-vim'
 " SCSS lint checker
 Plugin 'gcorne/vim-sass-lint'
+" FuzzyFinder
+Plugin 'vim-scripts/FuzzyFinder'
 " angular2 snippets
 " Plugin 'mhartington/vim-angular2-snippets'
-" The following are examples of different formats supported.
-" Keep Plugin commands between vundle#begin/end.
+" For text surrounding
+Plugin 'tpope/vim-surround'
+" Git gutter plugin
+Plugin 'airblade/vim-gitgutter'
+" Git integration
+Plugin 'tpope/vim-fugitive'
+" Multi cursor plugin
+Plugin 'terryma/vim-multiple-cursors'
 " plugin on GitHub repo
 " Plugin 'tpope/vim-fugitive'
 " plugin from http://vim-scripts.org/vim/scripts.html
-" Plugin 'L9'
+Plugin 'L9'
 " Git plugin not hosted on GitHub
 " Plugin 'git://git.wincent.com/command-t.git'
 " git repos on your local machine (i.e. when working on your own plugin)
@@ -62,7 +70,7 @@ Plugin 'gcorne/vim-sass-lint'
 " Install L9 and avoid a Naming conflict if you've already installed a
 " different version somewhere else.
 " Plugin 'ascenator/L9', {'name': 'newL9'}
-" ===================== END LIST ====================================
+"===================== END LIST ====================================
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -77,7 +85,7 @@ filetype plugin indent on    " required
 " :PluginClean      - confirms removal of unused plugins; append `!` to auto-approve removal
 "
 " see :h vundle for more details or wiki for FAQ
-" Put your non-Plugin stuff after this line
+"================= VUNDLE END =====================================
 
 " allow backspacing over everything in insert mode
 set backspace=indent,eol,start
@@ -91,6 +99,7 @@ endif
 set history=50		" keep 50 lines of command line history
 set ruler		" show the cursor position all the time
 set showcmd		" display incomplete commands
+" Highlight dynamically as pattern is typed
 set incsearch		" do incremental searching
 
 " For Win32 GUI: remove 't' flag from 'guioptions': no tearoff menu entries
@@ -162,6 +171,9 @@ if has('langmap') && exists('+langnoremap')
   set langnoremap
 endif
 
+if !has('gui_running')
+  set t_Co=256
+endif
 " enable Dracula theme
 " syntax on
 " color dracula
@@ -172,7 +184,11 @@ let &t_te.="\e[0 q"
 
 set hlsearch
 
-set number
+set number " show line numbers
+set encoding=utf-8 " set file encoding
+scriptencoding utf-8
+set fileencoding=utf-8
+set fileformat=unix " set unix line ending
 
 filetype indent on
 " set filetype=html (ft=html)
@@ -182,14 +198,124 @@ set shiftwidth=4
 set softtabstop=4
 set expandtab
 
-" ==================== Configuration Plugins Global variables =====================
-" configuration of emmet-vim (Use Tab+, for expansion)
+" Optimize for fast terminal connections
+set ttyfast
+" Change mapleader
+" let mapleader=","
+" Show 'invisible' characters
+set lcs=trail:·,eol:¬,nbsp:_
+set list
+" Ignore case of searches
+set ignorecase
+" Always show status line
+set laststatus=2
+" Show the current mode
+set showmode
+" Show the filename in the window titlebar
+" set title
+" Show the (partial) command as it’s being typed
+set showcmd
+" Set stylish as color scheme
+" set background=dark
+" colorscheme tomorrow
+
+" ==================== CONFIGURATION PLUGINS GLOBAL VARIABLES =====================
+"===== Vim-Airline ===========================
+function! AirlineInit()
+"   let g:airline_section_a = airline#section#create(['mode',' ','branch'])
+"   let g:airline_section_b = airline#section#create_left(['ffenc','hunks','%f'])
+  let g:airline_section_b = airline#section#create_left(['branch','hunks'])
+"   let g:airline_section_c = airline#section#create(['filetype'])
+"   let g:airline_section_x = airline#section#create(['%P'])
+"   let g:airline_section_y = airline#section#create(['%B'])
+"   let g:airline_section_z = airline#section#create_right(['%l','%c'])
+"   '%f' - shows file name with extention
+"   '%{getcwd()}' - shows absolute path for current file
+"   '%t' - shows file name with extention
+endfunction
+autocmd VimEnter * call AirlineInit()
+
+let g:airline_detect_modified=1 " enable modified detection
+let g:airline_detect_paste=1 " enable paste detection
+let g:airline_detect_spell=1 " enable spell detection
+let g:airline_inactive_collapse=1
+let g:airline_theme='dark'
+
+let g:airline#extensions#tabline#enabled = 1 " To automatically display all buffers
+let g:airline#extensions#branch#enabled = 1
+let g:airline#extensions#branch#displayed_head_limit = 20 " truncate long branch names to fixed length
+let g:airline#extensions#branch#format = 2 " To truncate all path sections but the last one
+
+let g:airline#extensions#syntastic#enabled = 0 " To disable syntastic integration
+
+let g:airline#extensions#whitespace#enabled = 1 " To enable detection of whitespace errors
+" let g:airline_theme='solarized'
+" let g:cobalt2 = 1
+" let g:airline_powerline_fonts = 1
+" let g:airline_symbols_ascii = 1
+
+" if !exists('g:airline_symbols')
+"   let g:airline_symbols = {}
+" endif
+
+" unicode symbols
+" let g:airline_left_sep = '»'
+" let g:airline_left_sep = '▶'
+" let g:airline_right_sep = '«'
+" let g:airline_right_sep = '◀'
+" let g:airline_symbols.linenr = '␊'
+" let g:airline_symbols.linenr = '␤'
+" let g:airline_symbols.linenr = '¶'
+" let g:airline_symbols.branch = '⎇'
+" let g:airline_symbols.paste = 'ρ'
+" let g:airline_symbols.paste = 'Þ'
+" let g:airline_symbols.paste = '∥'
+" let g:airline_symbols.whitespace = 'Ξ'
+" Vim-Airline End ============================
+"===== Multi cursors =========================
+let g:multi_cursor_use_default_mapping=0 " disable default keybindings
+let g:multi_cursor_next_key='<C-j>'
+let g:multi_cursor_prev_key='<C-k>'
+let g:multi_cursor_skip_key='<C-x>'
+let g:multi_cursor_quit_key='<Esc>'
+let g:multi_cursor_start_key='<C-j>'
+let g:multi_cursor_start_word_key='g<C-j>'
+" Multi cursors End ==========================
+"===== EMMET (Use Tab+, for expansion) =====
 let g:user_emmet_leader_key='<Tab>'
-" configuration of editorconfig vim plugin (commented because does not work)
+" EMMET End =====
+"===== NERDTree configuration =====
+" autocmd vimenter * NERDTree " to open a NERDTree automatically when vim starts up
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif " to close vim if the only NERDTree window opened
+map <C-n> :NERDTreeToggle<CR>
+" File highlighting
+function! NERDTreeHighlightFile(extension, fg, bg, guifg, guibg)
+  exec 'autocmd filetype nerdtree highlight ' . a:extension .' ctermbg='. a:bg .' ctermfg='. a:fg .' guibg='. a:guibg .' guifg='. a:guifg
+  exec 'autocmd filetype nerdtree syn match ' . a:extension .' #^\s\+.*'. a:extension .'$#'
+endfunction
+call NERDTreeHighlightFile('html', 'green', 'none', 'green', '#151515')
+call NERDTreeHighlightFile('ini', 'yellow', 'none', 'yellow', '#151515')
+call NERDTreeHighlightFile('md', 'cyan', 'none', 'cyan', '#151515')
+call NERDTreeHighlightFile('yml', 'yellow', 'none', 'yellow', '#151515')
+call NERDTreeHighlightFile('config', 'yellow', 'none', 'yellow', '#151515')
+call NERDTreeHighlightFile('conf', 'yellow', 'none', 'yellow', '#151515')
+call NERDTreeHighlightFile('json', 'yellow', 'none', 'yellow', '#151515')
+call NERDTreeHighlightFile('scss', 'Magenta', 'none', '#ff00ff', '#151515')
+call NERDTreeHighlightFile('css', 'Magenta', 'none', '#ff00ff', '#151515')
+call NERDTreeHighlightFile('coffee', 'Red', 'none', 'red', '#151515')
+call NERDTreeHighlightFile('js', 'Red', 'none', '#ffa500', '#151515')
+call NERDTreeHighlightFile('ts', 'blue', 'none', '#3366ff', '#151515')
+let g:NERDTreeDirArrowExpandable = '+' " change default arrows
+let g:NERDTreeDirArrowCollapsible = '-'
+" NERDTree END =====
+"===== Editorconfig configuration =====
 " let g:EditorConfig_exec_path = '~/.editorconfig'
+" :EditorConfigReload - use the command to load new configuration after modifying editorconfig file
+let g:EditorConfig_max_line_indicator="fill"
 " configuration of editorconfig for jsBeautifier (commented because does not work)
 " let g:EditorConfig_exec_path = '~/.editorconfig'
-" configuration of js-beautify plugin
+" Editorconfig END =====
+"===== js-beautify configuration =====
 map <c-f> :call JsBeautify()<cr>
 autocmd FileType javascript noremap <buffer>  <c-f> :call JsBeautify()<cr>
 " for json
@@ -202,7 +328,8 @@ autocmd FileType javascript vnoremap <buffer>  <c-f> :call RangeJsBeautify()<cr>
 autocmd FileType json vnoremap <buffer> <c-f> :call RangeJsonBeautify()<cr>
 autocmd FileType html vnoremap <buffer> <c-f> :call RangeHtmlBeautify()<cr>
 autocmd FileType css vnoremap <buffer> <c-f> :call RangeCSSBeautify()<cr>
-" CONFIGURATION FOR SYNTASTIC PLUGIN
+" js-beautify END =====
+"===== SYNTASTIC Configuration =====
 " Run:
 "     :SyntasticInfo to see available checkers
 "     :SyntasticCheck to invoke syntax check on the current file
@@ -216,15 +343,25 @@ let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
-let g:syntastic_javascript_checkers = ['jshint', 'eslint']
+let g:syntastic_html_checkers = ['htmlhint']
+let g:syntastic_html_htmlhint_args = "--config .htmlhintrc"
+let g:syntastic_scss_checkers=['stylelint']
+" let g:syntastic_scss_stylelint_args = "--syntax scss"
+let g:syntastic_javascript_checkers = ['eslint']
 let g:syntastic_typescript_checkers = ['tsc', 'tslint']
-" let g:syntastic_typescript_tslint_args = "--config ~/tslint.json"
+let g:syntastic_typescript_tslint_args = "--config tslint.json"
 let g:typescript_compiler_binary = 'tsc'
 autocmd FileType typescript :set makeprg=tsc
 autocmd QuickFixCmdPost [^l]* nested cwindow
 autocmd QuickFixCmdPost    l* nested lwindow
-" let g:syntastic_html_checkers
-let g:syntastic_scss_checkers=["sasslint"]
+" SYNTASTIC End =====
+"===== GitGutter Configuration =======================
+set updatetime=250 " to decreade delay of showing gutter icons
+" nmap <C-A-T> :call GitGutterLineHighlightsToggle()<CR>
+" nmap <C-p><C-h> <Plug>GitGutterPreviewHunk
+" nmap <C-u><C-h> <Plug>GitGutterUndoHunk
+let g:gitgutter_highlight_lines = 1 " to turn on highlighting by default
+" GitGutter End ======================================
 
 " ==================== Keys Remapping ================================
 " remapping of ex commangs
