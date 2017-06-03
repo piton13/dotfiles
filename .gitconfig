@@ -4,6 +4,8 @@
 [core]
     autocrlf = input
     editor = vim
+	trustctime = false
+	filemode = false
     # logAllRefUpdates = true ;to enable reflogs
 [user]
 	name = Igor Mykhaylyuk
@@ -21,6 +23,11 @@
     rbi = !bash -c \"git rebase -i HEAD~${1:-2}\"
     review = !bash -c \"git push origin HEAD:refs/for/${1:-develop}\"
     rp = !bash -c \"git push origin HEAD\"
+	last = log -1 --stat
+	cl = clone
+	unstage = reset HEAD --
+	dc = diff --cached
+	lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %Cblue<%an>%Creset' --abbrev-commit --date=relative --all
 #	up = "!git remote update -p; git merge --ff-only @{u}"
 [merge]
 tool = sublimerge
@@ -38,3 +45,12 @@ cmd = subl -n --wait \"$REMOTE\" \"$LOCAL\" --command \"sublimerge_diff_views {\
 	default = current
 [pull]
 	rebase = true
+[color]
+	ui = true
+[credential]
+	helper = cache --timeout=3600
+[mergetool]
+	keeptemporaries = false
+	keepbackups = false
+	prompt = false
+	trustexitcode = false
