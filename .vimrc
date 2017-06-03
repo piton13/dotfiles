@@ -46,6 +46,11 @@ Plugin 'leafgarland/typescript-vim'
 Plugin 'gcorne/vim-sass-lint'
 " FuzzyFinder
 Plugin 'vim-scripts/FuzzyFinder'
+" plugin from http://vim-scripts.org/vim/scripts.html
+Plugin 'L9' "Used for fuzzyFinder
+" UltiSnips
+Plugin 'SirVer/ultisnips'
+Plugin 'honza/vim-snippets'
 " angular2 snippets
 " Plugin 'mhartington/vim-angular2-snippets'
 " For text surrounding
@@ -58,8 +63,6 @@ Plugin 'tpope/vim-fugitive'
 Plugin 'terryma/vim-multiple-cursors'
 " plugin on GitHub repo
 " Plugin 'tpope/vim-fugitive'
-" plugin from http://vim-scripts.org/vim/scripts.html
-Plugin 'L9'
 " Git plugin not hosted on GitHub
 " Plugin 'git://git.wincent.com/command-t.git'
 " git repos on your local machine (i.e. when working on your own plugin)
@@ -209,6 +212,7 @@ set list
 set ignorecase
 " Always show status line
 set laststatus=2
+set showtabline=2 " Always display the tabline, even if there is only one tab
 " Show the current mode
 set showmode
 " Show the filename in the window titlebar
@@ -221,6 +225,8 @@ set showcmd
 
 " ==================== CONFIGURATION PLUGINS GLOBAL VARIABLES =====================
 "===== Vim-Airline ===========================
+" set guifont=Droid\ Sans\ Mono\ for\ Powerline " by default vim uses font for my terminal
+set guifont=DejaVu\ Sans\ Mono\ for\ Powerline " by default vim uses font for my terminal
 function! AirlineInit()
 "   let g:airline_section_a = airline#section#create(['mode',' ','branch'])
 "   let g:airline_section_b = airline#section#create_left(['ffenc','hunks','%f'])
@@ -251,7 +257,7 @@ let g:airline#extensions#syntastic#enabled = 0 " To disable syntastic integratio
 let g:airline#extensions#whitespace#enabled = 1 " To enable detection of whitespace errors
 " let g:airline_theme='solarized'
 " let g:cobalt2 = 1
-" let g:airline_powerline_fonts = 1
+let g:airline_powerline_fonts = 1
 " let g:airline_symbols_ascii = 1
 
 " if !exists('g:airline_symbols')
@@ -281,6 +287,11 @@ let g:multi_cursor_quit_key='<Esc>'
 let g:multi_cursor_start_key='<C-j>'
 let g:multi_cursor_start_word_key='g<C-j>'
 " Multi cursors End ==========================
+"===== UltiSnips =============================
+let g:UltiSnipsExpandTrigger="<C-e>"
+let g:UltiSnipsJumpForwardTrigger="<c-f>"
+let g:UltiSnipsJumpBackwardTrigger="<c-b>"
+" UltiSnips End ==============================
 "===== EMMET (Use Tab+, for expansion) =====
 let g:user_emmet_leader_key='<Tab>'
 " EMMET End =====
