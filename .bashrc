@@ -3,6 +3,9 @@ export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
 BASH_THEME="honukai"
 
+# to update bash history in realtime
+shopt -s histappend
+PROMPT_COMMAND="history -a;$PROMPT_COMMAND"
 
 alias la='ls -la'
 alias pr='cd -' # returns to the previous working directory
@@ -20,6 +23,7 @@ alias l='ls -CF'
 # info
 alias gil='git log --decorate --oneline'
 alias gilm='git log --decorate --oneline --author="Igor Mykhaylyuk" --graph --no-merges'
+alias gilac='git shortlog -s -n'
     # add <branch_name> to see commits of specified branch
     # add -<number> to see last <number> commits
     # use --grep="<text>" to see commits with specified text
@@ -29,6 +33,13 @@ alias gilm='git log --decorate --oneline --author="Igor Mykhaylyuk" --graph --no
     # gil master..feature to see commits which exist in feature branch but not exist in master
 alias gdif='git dif'
 alias gs='git status'
+# commiting
+alias gcia='git cia'
+# bisecting
+alias gbis='git bisect start'
+alias gbib='git bisect bad'
+alias gbig='git bisect good'
+alias gbir='git bisect reset'
 # branch info
 alias gba='git branch -a'
 alias gbl='git branch -l'
@@ -38,6 +49,9 @@ alias gbnm='git branch --no-merged'
 # branch operations
 alias gmb='git branch -m $(git symbolic-ref HEAD 2> /dev/null | cut -b 12-) $newbranch'
 alias gcpd='git co pos_develop'
+alias gcld='git co loy_develop'
+alias gcob='git co $branch'
+alias gcnb='git co -b $branch'
 # remote operations
 alias gif='git fetch'
 alias gifb='git fetch origin $branch'
