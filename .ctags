@@ -1,0 +1,12 @@
+--recurse=yes
+--exclude=.git
+--exclude=vendor/*
+--exclude=node_modules/*
+--exclude=db/*
+--exclude=log/*
+--exclude=cordova/*
+--exclude=node/*
+--exclude=reports/*
+--exclude=target/*
+--exclude=vendors/*
+--exclude=*/vendors/*

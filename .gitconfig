@@ -6,6 +6,7 @@
     editor = vim
 	trustctime = false
 	filemode = false
+	excludesfile = /home/igor/.global_ignore
     # logAllRefUpdates = true ;to enable reflogs
 [user]
 	name = Igor Mykhaylyuk
@@ -54,3 +55,5 @@ cmd = subl -n --wait \"$REMOTE\" \"$LOCAL\" --command \"sublimerge_diff_views {\
 	keepbackups = false
 	prompt = false
 	trustexitcode = false
+[web]
+	browser = chromium

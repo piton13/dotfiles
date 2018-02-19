@@ -1,0 +1,5 @@
+{
+    "validateQuoteMarks" : "'",
+    "validateIndentation": 4,
+    "disallowMixedSpacesAndTabs": true
+}

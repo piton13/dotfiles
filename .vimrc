@@ -11,6 +11,13 @@ endif
 set nocompatible              " be iMproved, required (to use VIM settings rather than VI)
 filetype off                  " required
 
+" remove trailing spaces
+" autocmd BufWritePre * :%s/\s\+$//e
+autocmd QuitPre * :%s/\s\+$//e
+
+" allow backspacing over everything in insert mode
+set backspace=indent,eol,start
+
 " set the runtime path to include Vundle and initialize
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
@@ -44,15 +51,27 @@ Plugin 'vim-syntastic/syntastic'
 Plugin 'leafgarland/typescript-vim'
 " SCSS lint checker
 Plugin 'gcorne/vim-sass-lint'
+" CtrlP finder
+Plugin 'kien/ctrlp.vim'
+" Ack.vim
+Plugin 'mileszs/ack.vim'
+" Ctags for vim
+Plugin 'craigemery/vim-autotag'
+" YouCompleteMe
+Plugin 'Valloric/YouCompleteMe'
+" Expanding regions
+" Plugin 'terryma/vim-expand-region'
 " FuzzyFinder
-Plugin 'vim-scripts/FuzzyFinder'
+" Plugin 'vim-scripts/FuzzyFinder'
 " plugin from http://vim-scripts.org/vim/scripts.html
-Plugin 'L9' "Used for fuzzyFinder
+" Plugin 'L9' "Used for fuzzyFinder
 " UltiSnips
 Plugin 'SirVer/ultisnips'
 Plugin 'honza/vim-snippets'
 " angular2 snippets
 " Plugin 'mhartington/vim-angular2-snippets'
+" For text completion
+" Plugin 'Shougo/neocomplete.vim'
 " For text surrounding
 Plugin 'tpope/vim-surround'
 " Git gutter plugin
@@ -90,9 +109,6 @@ filetype plugin indent on    " required
 " see :h vundle for more details or wiki for FAQ
 "================= VUNDLE END =====================================
 
-" allow backspacing over everything in insert mode
-set backspace=indent,eol,start
-
 if has("vms")
   set nobackup		" do not keep a backup file, use versions instead
 else
@@ -127,6 +143,11 @@ if &t_Co > 2 || has("gui_running")
   set hlsearch
 endif
 
+filetype indent on
+" set filetype=html (ft=html)
+set smartindent
+set ts=4 sts=4 sw=4 expandtab " tabstop, softtabstop, shiftwidth
+
 " Only do this part when compiled with support for autocommands.
 if has("autocmd")
 
@@ -140,8 +161,15 @@ if has("autocmd")
   augroup vimrcEx
   au!
 
+  " Enable filetype detection
+  filetype on
+
   " For all text files set 'textwidth' to 78 characters.
   autocmd FileType text setlocal textwidth=78
+  autocmd FileType html setlocal ts=4 sts=4 sw=4 expandtab
+  autocmd FileType css setlocal ts=2 sts=2 sw=2 expandtab
+  autocmd FileType scss setlocal ts=2 sts=2 sw=2 expandtab
+  autocmd FileType javascript setlocal ts=4 sts=4 sw=4 expandtab
 
   " When editing a file, always jump to the last known cursor position.
   " Don't do it when the position is invalid or when inside an event handler
@@ -152,6 +180,8 @@ if has("autocmd")
     \ endif
 
   augroup END
+
+  " autocmd BufNewFile, BufRead *.rss, *.atom setfiletype xml
 
 else
 
@@ -193,23 +223,30 @@ scriptencoding utf-8
 set fileencoding=utf-8
 set fileformat=unix " set unix line ending
 
-filetype indent on
-" set filetype=html (ft=html)
-set smartindent
-set tabstop=4
-set shiftwidth=4
-set softtabstop=4
-set expandtab
+" Code Folding
+" set foldmethod=expr
+" set foldexpr=%g/\(function\_.\{-}\)\@<={/ normal! f{zf%
+" set foldexpr=getline(v:lnum)=~'^\\s*$'&&getline(v:lnum+1)=~'\\S'?'<1':1
+" setlocal foldmethod=marker
+setlocal foldmethod=indent
+" setlocal foldmarker={,}
+" set foldlevelstart=0 " set 0 to open file with folded whole levels or 99 with opened
+" let javaScript_fold=0         " JavaScript
+" let vimsyn_folding='af'       " Vim script
+" let xml_syntax_folding=1      " XML
+" folding paragraphs
+" set foldexpr=getline(v:lnum)=~'^\\s{8}function'?'>1':5&&getline(v:lnum+1)=~'\\s{8}\}'?'<1':10
 
+" set paste " prevents pasting comment form previous lines
 " Optimize for fast terminal connections
 set ttyfast
 " Change mapleader
 " let mapleader=","
 " Show 'invisible' characters
-set lcs=trail:·,eol:¬,nbsp:_
+set lcs=trail:·,eol:¬,nbsp:_,tab:▸\
 set list
 " Ignore case of searches
-set ignorecase
+" set ignorecase
 " Always show status line
 set laststatus=2
 set showtabline=2 " Always display the tabline, even if there is only one tab
@@ -226,7 +263,7 @@ set showcmd
 " ==================== CONFIGURATION PLUGINS GLOBAL VARIABLES =====================
 "===== Vim-Airline ===========================
 " set guifont=Droid\ Sans\ Mono\ for\ Powerline " by default vim uses font for my terminal
-set guifont=DejaVu\ Sans\ Mono\ for\ Powerline " by default vim uses font for my terminal
+set guifont=Droid\ Sans\ Mono\ for\ Powerline " by default vim uses font for my terminal
 function! AirlineInit()
 "   let g:airline_section_a = airline#section#create(['mode',' ','branch'])
 "   let g:airline_section_b = airline#section#create_left(['ffenc','hunks','%f'])
@@ -245,23 +282,41 @@ let g:airline_detect_modified=1 " enable modified detection
 let g:airline_detect_paste=1 " enable paste detection
 let g:airline_detect_spell=1 " enable spell detection
 let g:airline_inactive_collapse=1
+
 let g:airline_theme='dark'
+let g:airline_powerline_fonts = 1
 
-let g:airline#extensions#tabline#enabled = 1 " To automatically display all buffers
+  " let g:airline#extensions#tabline#exclude_preview = 1
+  " let g:airline#extensions#tabline#show_tab_nr = 1
+  " let g:airline#extensions#tabline#tab_min_count = 1
 let g:airline#extensions#branch#enabled = 1
+" let g:airline#extensions#tabline#left_sep = ' '
+" let g:airline#extensions#tabline#left_alt_sep = '|'
 let g:airline#extensions#branch#displayed_head_limit = 20 " truncate long branch names to fixed length
-let g:airline#extensions#branch#format = 2 " To truncate all path sections but the last one
-
-let g:airline#extensions#syntastic#enabled = 0 " To disable syntastic integration
+" let g:airline#extensions#branch#format = 2 " To truncate all path sections but the last one
 
 let g:airline#extensions#whitespace#enabled = 1 " To enable detection of whitespace errors
 " let g:airline_theme='solarized'
 " let g:cobalt2 = 1
-let g:airline_powerline_fonts = 1
+
+let g:airline#extensions#tabline#show_close_button = 0
+let g:airline#extensions#tabline#buffer_nr_show = 1
+let g:airline_skip_empty_sections = 1
+let g:airline#extensions#tabline#fnamemod = ':t'
+let g:airline#extensions#syntastic#enabled = 0 " To disable syntastic integration
+let g:airline_detect_iminsert=1
+let g:airline#extensions#tmuxline#enabled = 0
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#show_tabs = 1
+let g:airline#extensions#tabline#show_buffers = 0
+let g:airline#extensions#tabline#tab_nr_type = 1 " tab number
+let g:airline#extensions#tabline#show_splits = 1
+let g:airline#extensions#wordcount#enabled = 0
+let g:airline#extensions#tagbar#enabled = 1
 " let g:airline_symbols_ascii = 1
 
 " if !exists('g:airline_symbols')
-"   let g:airline_symbols = {}
+  " let g:airline_symbols = {}
 " endif
 
 " unicode symbols
@@ -287,18 +342,35 @@ let g:multi_cursor_quit_key='<Esc>'
 let g:multi_cursor_start_key='<C-j>'
 let g:multi_cursor_start_word_key='g<C-j>'
 " Multi cursors End ==========================
+"===== CtrlP =================================
+let g:ctrlp_by_filename = 1
+let g:ctrlp_root_markers = ['*/pos_ui/*', '*/pos_backoffice-ui', 'package.json', '.gitignore']
+let g:ctrlp_custom_ignore = {
+  \ 'file': '\v\.(spec.js)$',
+  \ }
+let g:ctrlp_show_hidden = 1
+set wildignore+=*/tmp/*,*/app/vendors/*,*/node/*,*/WEB-INF/*,*/.idea/*,*/node_modules/*,*/reports/*,*/target/*,*/cordova/*,*.so,*.swp,*.zip,*.*~
+" CtrlP End ==================================
+"===== Ack.vim ===============================
+noremap <leader>f :copen<CR>:Ack
+" Ack.vim End ================================
 "===== UltiSnips =============================
-let g:UltiSnipsExpandTrigger="<C-e>"
+let g:UltiSnipsExpandTrigger="<c-e>"
 let g:UltiSnipsJumpForwardTrigger="<c-f>"
 let g:UltiSnipsJumpBackwardTrigger="<c-b>"
 " UltiSnips End ==============================
 "===== EMMET (Use Tab+, for expansion) =====
 let g:user_emmet_leader_key='<Tab>'
 " EMMET End =====
+" Keymaps =========================
+" vmap <D-[> <gv
+" vmap <D-]> >gv
+"===== Keymaps ====================
 "===== NERDTree configuration =====
 " autocmd vimenter * NERDTree " to open a NERDTree automatically when vim starts up
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif " to close vim if the only NERDTree window opened
 map <C-n> :NERDTreeToggle<CR>
+map <leader>r :NERDTreeFind<cr>
 " File highlighting
 function! NERDTreeHighlightFile(extension, fg, bg, guifg, guibg)
   exec 'autocmd filetype nerdtree highlight ' . a:extension .' ctermbg='. a:bg .' ctermfg='. a:fg .' guibg='. a:guibg .' guifg='. a:guifg
@@ -319,6 +391,8 @@ call NERDTreeHighlightFile('ts', 'blue', 'none', '#3366ff', '#151515')
 let g:NERDTreeDirArrowExpandable = '+' " change default arrows
 let g:NERDTreeDirArrowCollapsible = '-'
 " NERDTree END =====
+"===== Neocomplete configuration ======
+" Neocomplete END =====
 "===== Editorconfig configuration =====
 " let g:EditorConfig_exec_path = '~/.editorconfig'
 " :EditorConfigReload - use the command to load new configuration after modifying editorconfig file
@@ -327,6 +401,8 @@ let g:EditorConfig_max_line_indicator="fill"
 " let g:EditorConfig_exec_path = '~/.editorconfig'
 " Editorconfig END =====
 "===== js-beautify configuration =====
+execute "set <M-r>=\el"
+nnoremap <M-l> l
 map <c-f> :call JsBeautify()<cr>
 autocmd FileType javascript noremap <buffer>  <c-f> :call JsBeautify()<cr>
 " for json
@@ -377,3 +453,71 @@ let g:gitgutter_highlight_lines = 1 " to turn on highlighting by default
 " ==================== Keys Remapping ================================
 " remapping of ex commangs
 cnoremap <expr> %% getcmdtype() == ':' ? expand('%:h').'/' : '%%'
+map <leader>ew :e <C-R>=expand("%:p:h") . "/" <CR>
+map <leader>es :sp <C-R>=expand("%:p:h") . "/" <CR>
+map <leader>ev :vsp <C-R>=expand("%:p:h") . "/" <CR>
+map <leader>et :tabe <C-R>=expand("%:p:h") . "/" <CR>
+" to save buffer only if it was modified
+noremap <leader>s :up<CR>
+
+function! MyFunc()
+   execute "normal! mcgg"
+   let find_only = matchstr(getline(1), '.only')
+   let founded = find_only == '.only'
+   if !founded
+      s/describe/describe.only/
+   else
+      s/.only//
+   endif
+   execute "normal! `c"
+endfunction
+nnoremap <silent> <F3> :<C-U>call MyFunc()<CR>
+" nnoremap <silent> <F4> :NeocompleteToggle<CR>
+
+function! NextHunkAllBuffers()
+    let line = line('.')
+    GitGutterNextHunk
+    if line('.') != line
+        return
+    endif
+
+    let bufnr = bufnr('')
+    while 1
+        bnext
+        if bufnr('') == bufnr
+            return
+        endif
+        if !empty(GitGutterGetHunks())
+            normal! 1G
+            GitGutterNextHunk
+            return
+        endif
+    endwhile
+endfunction
+
+function! PrevHunkAllBuffers()
+    let line = line('.')
+    GitGutterPrevHunk
+    if line('.') != line
+        return
+    endif
+
+    let bufnr = bufnr('')
+    while 1
+        bprevious
+        if bufnr('') == bufnr
+            return
+        endif
+        if !empty(GitGutterGetHunks())
+            normal! G
+            GitGutterPrevHunk
+            return
+        endif
+    endwhile
+endfunction
+
+nmap <silent> ]j :call NextHunkAllBuffers()<CR>
+nmap <silent> ]k :call PrevHunkAllBuffers()<CR>
+
+" nmap ]j <Plug>GitGutterNextHunk
+" nmap ]k <Plug>GitGutterPrevHunk
