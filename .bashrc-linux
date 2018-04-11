@@ -1,60 +1,6 @@
 # ~/.bashrc: executed by bash(1) for non-login shells.
 # see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
 # for examples
-alias la='ls -la'
-alias pr='cd -' # returns to the previous working directory
-alias "...=cd ../.."
-alias "....=cd ../../.."
-alias ".....=cd ../../../.."
-alias "......=cd ../../../../.."
-
-# some more ls aliases
-alias ll='ls -alF'
-alias la='ls -A'
-alias l='ls -CF'
-
-# usefull alias for git commands
-# info
-alias gil='git log --decorate --oneline'
-alias gdif='git dif'
-alias gs='git status'
-# branch info
-alias gba='git branch -a'
-alias gbl='git branch -l'
-alias gbr='git branch -r'
-alias gbm='git branch --merged'
-alias gbnm='git branch --no-merged'
-# remote operations
-alias gif='git fetch'
-alias gpr='git pull --rebase origin master'
-alias grp='git rp'
-# rebase
-alias grbi='git rbi'
-alias grba='git rebase --abort'
-alias grbc='git rebase --continue'
-alias grbs='git rebase --skip'
-# reset
-alias gci='git clean -dfx' # remove whole ignored files and untracked
-alias gcu='git clean -df' # remove whole untracked files
-alias grh='git reset --hard HEAD'
-alias grs='git reset --soft HEAD'
-# stash
-alias gst='git stash'
-alias gust='git stash pop'
-
-# some aliases for npm
-alias ncc='npm cache clean'
-alias nci='np && ncc && ni'
-alias ni='npm install'
-alias nl='npm list --depth=${1:-0}'
-alias np='npm prune'
-alias nr='npm run'
-alias ns='npm start'
-alias nsbr='npm start -- --log --mock'
-alias nt='npm test'
-alias nv='npm run validate'
-alias nvf='npm run lintfix'
-alias nvd='npm version'
 
 # If not running interactively, don't do anything
 case $- in
@@ -109,15 +55,11 @@ if [ -n "$force_color_prompt" ]; then
 	color_prompt=
     fi
 fi
-# Show git branch name on the Linux prompt
-# Add git branch if its present to PS1
-parse_git_branch() {
- git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/(\1)/'
-}
+
 if [ "$color_prompt" = yes ]; then
-    PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\[\033[31m\]\033[1m$(parse_git_branch)\033[0m\[\033[0m\]\$ '
+    PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
 else
-    PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$(parse_git_branch)\$ '
+    PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
 fi
 unset color_prompt force_color_prompt
 
@@ -145,6 +87,11 @@ fi
 # colored GCC warnings and errors
 #export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
 
+# some more ls aliases
+alias ll='ls -alF'
+alias la='ls -A'
+alias l='ls -CF'
+
 # Add an "alert" alias for long running commands.  Use like so:
 #   sleep 10; alert
 alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
@@ -169,10 +116,6 @@ if ! shopt -oq posix; then
   fi
 fi
 
-export NVM_DIR="/home/piton/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
-
-export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
-
-# added by travis gem
-[ -f /home/piton/.travis/travis.sh ] && source /home/piton/.travis/travis.sh
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
