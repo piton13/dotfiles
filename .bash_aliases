@@ -121,3 +121,11 @@ alias nta='karma start --single-run'
 
 alias "c=clip"
 alias "v=clip -o"
+
+KAFKA_HOME="$HOME/Downloads/kafka_2.11-1.1.0"
+alias 'car-zookeeper-start'="$KAFKA_HOME/bin/zookeeper-server-start.sh $KAFKA_HOME/config/zookeeper.properties"
+alias 'car-kafka-start'="$KAFKA_HOME/bin/kafka-server-start.sh $KAFKA_HOME/config/server.properties"
+alias 'k-ls'="$KAFKA_HOME/bin/kafka-topics.sh --list --zookeeper localhost:2181"
+alias 'k-ct'="$KAFKA_HOME/bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic $topic"
+alias 'k-sp'="$KAFKA_HOME/bin/kafka-console-producer.sh --broker-list localhost:9092 --topic $topic"
+alias 'k-sc'="$KAFKA_HOME/bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic $1"
