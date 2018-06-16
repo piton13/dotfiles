@@ -1,0 +1,6 @@
+--ignore-dir=cordova/
+--ignore-dir=target/
+--ignore-dir=.idea/
+--ignore-dir=app/vendors/
+--ignore-file=match:/.spec.js$/
+--ignore-file=match:/tags$/

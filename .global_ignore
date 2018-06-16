@@ -1,5 +1,5 @@
 tags
 .ackrc
-.eslintrc
-.eslintignore
+# .eslintrc
+# .eslintignore
 *.sublime-*

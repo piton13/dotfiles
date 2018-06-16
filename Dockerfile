@@ -1,8 +1,11 @@
+# Docker v > 1.13
 FROM node:8.11.1
 WORKDIR /app
 # RUN useradd --user-group --create-home --shell /bin/false nupp && apt-get clean
+# copy the current directory contents into the container at /app
 ADD . /app
 RUN node -v && npm -v && npm install
+# define env variables
 ENV HOME '/home/nupp'
 ENV NAME world
 RUN echo $HOME
