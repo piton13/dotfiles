@@ -32,7 +32,7 @@ alias la='ls -A'
 alias l='ls -CF'
 
 alias cdp='cd ~/projects/ecommerce/pos_ui'
-alias mtp='cd ~/projects/refactor-evolution/ecommerce/pos_ui'
+# alias mtp='cd ~/projects/refactor-evolution/ecommerce/pos_ui'
 alias mtt='cd ~/my-trainings'
 
 # usefull alias for git commands
@@ -122,10 +122,38 @@ alias nta='karma start --single-run'
 alias "c=clip"
 alias "v=clip -o"
 
-KAFKA_HOME="$HOME/Downloads/kafka_2.11-1.1.0"
+CAR="/mnt/c/Users/Igor_Mykhaylyuk/projects/ctc-car-maks"
+alias mtp='cd $CAR'
+
+KAFKA_HOME="$HOME/kafka_2.11-1.1.0"
 alias 'car-zookeeper-start'="$KAFKA_HOME/bin/zookeeper-server-start.sh $KAFKA_HOME/config/zookeeper.properties"
 alias 'car-kafka-start'="$KAFKA_HOME/bin/kafka-server-start.sh $KAFKA_HOME/config/server.properties"
 alias 'k-ls'="$KAFKA_HOME/bin/kafka-topics.sh --list --zookeeper localhost:2181"
 alias 'k-ct'="$KAFKA_HOME/bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic $topic"
+alias 'k-rt'="$KAFKA_HOME/bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic $topic"
+alias 'k-dt'="$KAFKA_HOME/bin/kafka-run-class.sh kafka.admin.TopicCommand --zookeeper rkk3.hdp.local:2181 --delete --topic $topic"
 alias 'k-sp'="$KAFKA_HOME/bin/kafka-console-producer.sh --broker-list localhost:9092 --topic $topic"
 alias 'k-sc'="$KAFKA_HOME/bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic $1"
+
+alias 'k-tt1'="$KAFKA_HOME/bin/kafka-topics.sh --describe --zookeeper localhost:2181 --topic $topic"
+alias 'k-tt2'="$KAFKA_HOME/bin/kafka-consumer-offset-checker --group flume --topic $1 --zookeeper localhost:2181"
+
+runfile() { # to run file ingestion
+	node src -t $1 -o $CAR/file-ingestion/$2 -i $CAR/app-data/$3
+}
+cptl() { # to run file ingestion
+	cp /mnt/c/Users/Igor_Mykhaylyuk/projects/CTCO-CAR0/app-data/$1 $CAR/app-data/$1
+}
+cptw() { # to run file ingestion
+	cp $CAR/app-data/$1 /mnt/c/Users/Igor_Mykhaylyuk/projects/CTCO-CAR0/app-data/$1
+}
+cpdtl() { # to run file ingestion
+	cp -a /mnt/c/Users/Igor_Mykhaylyuk/projects/CTCO-CAR0/car0 ~/car0
+}
+cpdtw() { # to run file ingestion
+	cp -a ~/car0 /mnt/c/Users/Igor_Mykhaylyuk/projects/CTCO-CAR0/car0
+}
+alias 'car-ds'="cd $CAR/data-storage-api/ && npm start"
+alias 'car-dc'="cd $CAR/delta-calculator/ && npm start"
+alias 'car-fi'="cd $CAR/file-ingestion/ && runfile"
+# alias 'car-run-all'="car-ds && car-dc && car-run-all" # run-all should be the last command

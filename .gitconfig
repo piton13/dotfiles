@@ -4,9 +4,10 @@
 [core]
     autocrlf = input
     editor = vim
+    longpaths = true
 	trustctime = false
 	filemode = false
-	excludesfile = /home/igor/.global_ignore
+	excludesfile = C:/Users/Igor_Mykhaylyuk/.gitignore_global
     # logAllRefUpdates = true ;to enable reflogs
 [user]
 	name = Igor Mykhaylyuk
@@ -24,6 +25,7 @@
     rbi = !bash -c \"git rebase -i HEAD~${1:-2}\"
     review = !bash -c \"git push origin HEAD:refs/for/${1:-develop}\"
     rp = !bash -c \"git push origin HEAD\"
+    mpos = !bash -c \"git push gerrit HEAD\" -
 	last = log -1 --stat
 	cl = clone
 	unstage = reset HEAD --
@@ -46,6 +48,8 @@ cmd = subl -n --wait \"$REMOTE\" \"$LOCAL\" --command \"sublimerge_diff_views {\
 	default = current
 [pull]
 	rebase = true
+[rebase]
+    autoStash = true
 [color]
 	ui = true
 [credential]
