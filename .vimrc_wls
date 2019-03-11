@@ -1,0 +1,82 @@
+set number
+set nocompatible              " be iMproved, required 
+filetype off                  " required  
+" Make insensitive search
+set ignorecase 
+set smartcase
+" Switch syntax highlighting on, when the terminal has colors 
+" Also switch on highlighting the last used search pattern. 
+if &t_Co > 2 || has("gui_running")   
+	syntax on   
+	set hlsearch 
+endif 
+
+" set the runtime path to include Vundle and initialize 
+set rtp+=~/.vim/bundle/Vundle.vim 
+call vundle#begin() 
+" alternatively, pass a path where Vundle should install plugins 
+"call vundle#begin('~/some/path/here')  
+
+" let Vundle manage Vundle, required 
+Plugin 'VundleVim/Vundle.vim'  
+
+Plugin 'mattn/emmet-vim'
+Plugin 'vim-syntastic/syntastic'
+" Plugin 'Valloric/YouCompleteMe'
+Plugin 'Shougo/deoplete.nvim' 
+if !has('nvim')   
+	Plugin 'roxma/nvim-yarp'   
+	Plugin 'roxma/vim-hug-neovim-rpc' 
+endif 
+Plugin 'Shougo/neosnippet.vim' 
+Plugin 'Shougo/neosnippet-snippets'  
+Plugin 'Shougo/context_filetype.vim'  
+let g:deoplete#enable_at_startup = 1
+
+Plugin 'dhruvasagar/vim-table-mode' " Plugin with allows implement tables for documentation
+Plugin 'ctrlpvim/ctrlp.vim' " Plugin for searching files via regexps
+Plugin 'mileszs/ack.vim' " Plugin for search words in project
+" Plugin 'SirVer/ultisnips'
+" All of your Plugins must be added before the following line 
+call vundle#end()            " required 
+filetype plugin indent on    " required
+" ===========================================================
+set statusline+=%#warningmsg# 
+set statusline+=%{SyntasticStatuslineFlag()} 
+set statusline+=%*  
+
+let g:syntastic_always_populate_loc_list = 1 
+let g:syntastic_auto_loc_list = 1 
+let g:syntastic_check_on_open = 1 
+let g:syntastic_check_on_wq = 1
+let g:syntastic_javascript_checkers=['eslint']
+let g:syntastic_aggregate_errors = 1
+" vim-table-mode configuration ===============
+" let g:table_mode_corner_corner='+'
+" end vim-table-mode =========================
+" ctrlp.vim configuration ====================
+let g:ctrlp_by_filename = 1 
+let g:ctrlp_root_markers = ['*/pos_ui/*', '*/pos_backoffice-ui', 'package.json', '.gitignore'] 
+let g:ctrlp_custom_ignore = {   
+ \ 'file': '\v\.(spec.js)$',   
+ \ } 
+let g:ctrlp_show_hidden = 1 
+set wildignore+=*/tmp/*,*/app/vendors/*,*/node/*,*/WEB-INF/*,*/.idea/*,*/node_modules/*,*/reports/*,*/target/*,*/cordova/*,*.so,*.swp,*.zip,*.*~ 
+" end ctrlp.vim ==============================
+" ack.vim configuration ======================
+" noremap <C-f> :copen<CR>:Ack -ai
+nnoremap <Leader>f :Ack!<Space>
+" end ack.vim ================================
+"===== UltiSnips ============================= 
+" set nopaste
+" let g:UltiSnipsUsePythonVersion = 3
+" let g:UltiSnipsExpandTrigger="<c-e>" 
+" let g:UltiSnipsJumpForwardTrigger="<c-f>"
+" let g:UltiSnipsJumpBackwardTrigger="<c-b>" 
+" let g:UltiSnipsSnippetsDir = '/home/igor-luk/.vim/bundle/neosnippet-snippets/neosnippets'
+" UltiSnips End ==============================
+imap <C-k>     <Plug>(neosnippet_expand_or_jump) 
+smap <C-k>     <Plug>(neosnippet_expand_or_jump) 
+xmap <C-k>     <Plug>(neosnippet_expand_target)
+smap <expr><TAB> neosnippet#expandable_or_jumpable() ? "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
+let g:neosnippet#snippets_directory='~/my-vim-snippets'
