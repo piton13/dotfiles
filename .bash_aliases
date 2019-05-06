@@ -45,7 +45,7 @@ DROPBOX='/mnt/c/Users/Igor_Mykhaylyuk/!new_data/Dropbox/'
 CONFIGS="/mnt/c/Users/Igor_Mykhaylyuk/!new_data/Dropbox/Development/config-files"
 CONFIG="/mnt/c/Users/Igor_Mykhaylyuk/!new_data/Dropbox/Development/config-files/CONFIG.js"
 CONFIG_DEFAULT="/mnt/c/Users/Igor_Mykhaylyuk/!new_data/Dropbox/Development/config-files/CONFIG_DEFAULT.js"
-CAR="/mnt/c/Users/Igor_Mykhaylyuk/projects/ctc-car-new"
+CAR="/mnt/c/Users/Igor_Mykhaylyuk/projects/ctc-car"
 # KAFKA_URL="d9lcajkafk02.labcorp.ad.ctc:9092"
 KAFKA_URL="localhost:9092"
 # ZOOKEEPER_URL="d9lcajzokp01.labcorp.ad.ctc:2181"
@@ -236,6 +236,7 @@ alias nci='np && ncc && ni'
 alias ni='npm install --no-package-lock'
 alias nif='rm -rf ./node_modules && npm install --no-package-lock'
 alias nl='npm list --depth=${1:-0}' # linux command
+alias nlg='npm list -g --depth=${1:-0}' # linux command
 alias np='npm prune'
 alias nu='npm update'
 alias nr='npm run'
