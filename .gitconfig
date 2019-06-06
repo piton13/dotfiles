@@ -22,7 +22,7 @@
     cia = commit --amend --no-edit
     dif = diff HEAD
 	st = status
-    rbi = !bash -c \"git rebase -i HEAD~${1:-1}\"
+    rbi = !bash -c \"git rebase -i HEAD~${1:-2}\"
     review = !bash -c \"git push origin HEAD:refs/for/${1:-develop}\"
     rp = !bash -c \"git push origin HEAD\"
     mpos = !bash -c \"git push gerrit HEAD\" -

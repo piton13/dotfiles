@@ -41,10 +41,11 @@ check_libuv() {
 	UV_THREADPOOL_SIZE=$1 node $DROPBOX/Development/nodejs-trainings/threadpools_in_nodejs.js
 }
 
-DROPBOX='/mnt/c/Users/Igor_Mykhaylyuk/!new_data/Dropbox/'
-CONFIGS="/mnt/c/Users/Igor_Mykhaylyuk/!new_data/Dropbox/Development/config-files"
-CONFIG="/mnt/c/Users/Igor_Mykhaylyuk/!new_data/Dropbox/Development/config-files/CONFIG.js"
-CONFIG_DEFAULT="/mnt/c/Users/Igor_Mykhaylyuk/!new_data/Dropbox/Development/config-files/CONFIG_DEFAULT.js"
+DROPBOX='/mnt/c/Users/Igor_Mykhaylyuk/OneDrive/'
+TRAININGS='/mnt/c/Users/Igor_Mykhaylyuk/projects/trainings/'
+CONFIGS="/mnt/c/Users/Igor_Mykhaylyuk/OneDrive/Development/config-files"
+CONFIG="/mnt/c/Users/Igor_Mykhaylyuk/OneDrive/Development/config-files/CONFIG.js"
+CONFIG_DEFAULT="/mnt/c/Users/Igor_Mykhaylyuk/OneDrive/Development/config-files/CONFIG_DEFAULT.js"
 CAR="/mnt/c/Users/Igor_Mykhaylyuk/projects/ctc-car"
 # KAFKA_URL="d9lcajkafk02.labcorp.ad.ctc:9092"
 KAFKA_URL="localhost:9092"
@@ -52,12 +53,13 @@ KAFKA_URL="localhost:9092"
 ZOOKEEPER_URL="localhost:2181"
 # TOPIC_PREFIX="CTR_IM_"
 TOPIC_PREFIX="CTR_"
+# KAFKA_HOME="$HOME/kafka_2.12-2.2.0"
 KAFKA_HOME="$HOME/kafka_2.11-1.1.0"
 DOCKER_KAFKA_HOME="/opt/kafka_2.11-0.10.1.0/bin"
 DOCKER_KAFKA_URL="localhost:9092"
 DOCKER_ZOOKEEPER_URL="localhost:2181"
 # alias cdp='cd ~/projects/ecommerce/pos_ui'
-alias mtt='cd ~/my-trainings'
+alias mtt='cd $TRAININGS'
 alias mtdb='cd $DROPBOX'
 alias mtc='cd $CONFIGS'
 # alias mtp='cd ~/projects/refactor-evolution/ecommerce/pos_ui'
@@ -98,6 +100,7 @@ alias dcrma='docker container prune'
 alias dcs='docker stop $container_name'
 alias drk='docker run -p 2181:2181 -p 9092:9092 --env ADVERTISED_HOST=127.0.0.1 --env ADVERTISED_PORT=9092 --net car-network --name kafka spotify/kafka'
 alias drdb='docker run -P -d -e MYSQL_ROOT_PASSWORD=qwerty --name mysqldb mysql:8.0.15'
+alias drdbm='docker run -p 27017:27017 --name mongodb mongo'
 alias dib='docker build -t $image .'
 alias dils='docker images'
 alias dirm='docker rmi $image'
@@ -115,6 +118,9 @@ dt_info() {
 }
 dt_count() {
 	docker exec -it kafka $DOCKER_KAFKA_HOME/kafka-run-class.sh kafka.tools.GetOffsetShell --broker-list $DOCKER_KAFKA_URL --topic $1 --time -1 --offsets 1 
+}
+dt_counta() {
+	docker exec -it kafka $DOCKER_KAFKA_HOME/kafka-run-class.sh kafka.tools.GetOffsetShell --broker-list $DOCKER_KAFKA_URL --topic $1 --time -1 --offsets 1 | awk -F  ":" '{sum += $3} END {print sum}'
 }
 dt_create() {
 	docker exec -it kafka $DOCKER_KAFKA_HOME/kafka-topics.sh --create --zookeeper $DOCKER_ZOOKEEPER_URL --replication-factor 1 --partitions $2 --topic $1 
