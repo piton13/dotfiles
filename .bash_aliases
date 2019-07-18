@@ -75,6 +75,10 @@ alias gcpci='gcloud components install $1'
 alias gcpcr='gcloud components remove $1'
 alias gcpcu='gcloud components update'
 
+# aws aliases
+alias aws_login="okta-aws default sts get-caller-identity"
+alias aws_kin_ls="aws kinesis list-streams --profile=dev"
+
 # Docker configs
 export DOCKER_HOST=tcp://127.0.0.1:2375
 
