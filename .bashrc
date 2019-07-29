@@ -134,3 +134,7 @@ if [ -f '/home/igor-luk/google-cloud-sdk/path.bash.inc' ]; then . '/home/igor-lu
 
 # The next line enables shell command completion for gcloud.
 if [ -f '/home/igor-luk/google-cloud-sdk/completion.bash.inc' ]; then . '/home/igor-luk/google-cloud-sdk/completion.bash.inc'; fi
+
+export DOCKER_HOST=localhost:2375
+export PATH=$HOME/bin:$PATH
+export KUBECONFIG=$KUBECONFIG:~/.kube/kubeconfig

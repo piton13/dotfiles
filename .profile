@@ -18,3 +18,15 @@ fi
 
 # set PATH so it includes user's private bin directories
 PATH="$HOME/bin:$HOME/.local/bin:$PATH"
+
+if [ -f "$HOME/.okta/bash_functions" ]; then
+    . "$HOME/.okta/bash_functions"
+fi
+ 
+if [[ -d "$HOME/.okta/bin" && ":$PATH:" != *":$HOME/.okta/bin:"* ]]; then
+         PATH="$HOME/.okta/bin:$PATH"
+fi
+
+# JAVA_HOME="/usr/lib/jvm/java-8-openjdk-amd64"
+JAVA_HOME="/usr/lib/jvm/default-java"
+export JAVA_HOME

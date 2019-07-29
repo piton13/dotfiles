@@ -47,6 +47,7 @@ CONFIGS="/mnt/c/Users/Igor_Mykhaylyuk/OneDrive/Development/config-files"
 CONFIG="/mnt/c/Users/Igor_Mykhaylyuk/OneDrive/Development/config-files/CONFIG.js"
 CONFIG_DEFAULT="/mnt/c/Users/Igor_Mykhaylyuk/OneDrive/Development/config-files/CONFIG_DEFAULT.js"
 CAR="/mnt/c/Users/Igor_Mykhaylyuk/projects/ctc-car"
+DAT="/mnt/c/Users/Igor_Mykhaylyuk/projects/dat-dev"
 # KAFKA_URL="d9lcajkafk02.labcorp.ad.ctc:9092"
 KAFKA_URL="localhost:9092"
 # ZOOKEEPER_URL="d9lcajzokp01.labcorp.ad.ctc:2181"
@@ -63,7 +64,7 @@ alias mtt='cd $TRAININGS'
 alias mtdb='cd $DROPBOX'
 alias mtc='cd $CONFIGS'
 # alias mtp='cd ~/projects/refactor-evolution/ecommerce/pos_ui'
-alias mtp='cd $CAR'
+alias mtp='cd $DAT'
 alias mtd='cd $CAR/app-data'
 alias mtds='cd $CAR/cds.api.data-storage'
 alias mtra='cd $CAR/cds.api.reservation'
@@ -78,9 +79,17 @@ alias gcpcu='gcloud components update'
 # aws aliases
 alias aws_login="okta-aws default sts get-caller-identity"
 alias aws_kin_ls="aws kinesis list-streams --profile=dev"
+alias aws_kafka_move="ssh -i /mnt/c/Users/Igor_Mykhaylyuk/OneDrive/Projects/DAT-DEV/kafka+lambda_interaction/MSKKeyPairKafkaLambda.pem ec2-user@ec2-54-185-168-13.us-west-2.compute.amazonaws.com"
 
 # Docker configs
 export DOCKER_HOST=tcp://127.0.0.1:2375
+
+# Kubernetes aliases
+alias kub_ls="kubectl get pods"
+alias kub_p_logs="kubectl logs $1"
+alias kub_p_logs_prev="kubectl logs $1 --previous"
+alias kub_p_info="kubectl describe pod $1"
+alias kub_p_move="kubectl exec -it $1 -- /bin/bash"
 
 # usefull aliases for docker-compose commands
 dcompose_up () {
@@ -144,6 +153,9 @@ dt_get_last() {
 }
 dg_info() {
 	docker exec -it kafka $DOCKER_KAFKA_HOME/kafka-consumer-groups.sh --bootstrap-server $DOCKER_KAFKA_URL --group $1 --describe
+}
+dg_reset() {
+	docker exec -it kafka $DOCKER_KAFKA_HOME/kafka-consumer-groups.sh --bootstrap-server $DOCKER_KAFKA_URL --reset-offsets --group $1 --topic $2 --to-earliest --execute 
 }
 docker_kafka_subscribe_consumer() {
   # echo Consumer is listening $TOPIC_PREFIX $1 $2
