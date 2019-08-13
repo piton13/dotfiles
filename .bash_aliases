@@ -76,6 +76,9 @@ alias gcpci='gcloud components install $1'
 alias gcpcr='gcloud components remove $1'
 alias gcpcu='gcloud components update'
 
+# typeorm aliases
+alias typeorm_new="typeorm migration:create -n $1"
+
 # aws aliases
 alias aws_login="okta-aws default sts get-caller-identity"
 alias aws_kin_ls="aws kinesis list-streams --profile=dev"
@@ -86,10 +89,14 @@ export DOCKER_HOST=tcp://127.0.0.1:2375
 
 # Kubernetes aliases
 alias kub_ls="kubectl get pods"
-alias kub_p_logs="kubectl logs $1"
-alias kub_p_logs_prev="kubectl logs $1 --previous"
+alias kub_logs="kubectl logs $1"
+kub_logs_prev() {
+	kubectl logs $1 --previous
+}
 alias kub_p_info="kubectl describe pod $1"
-alias kub_p_move="kubectl exec -it $1 -- /bin/bash"
+kub_move() {
+	kubectl exec -it $1 -- /bin/bash
+}
 
 # usefull aliases for docker-compose commands
 dcompose_up () {
