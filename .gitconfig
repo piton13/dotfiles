@@ -11,8 +11,10 @@
     # logAllRefUpdates = true ;to enable reflogs
 [user]
 	name = Igor Mykhaylyuk
-#    email = igor13luk@gmail.com
-	email = igor.mykhaylyuk@dat.com
+	# email = ihor.mykhaylyuk@jmir.org
+	# email = ihor.mykhaylyuk@guesty.com
+	email = igor13luk@gmail.com
+	# email = igor.mykhaylyuk@dat.com
 [alias]
     co = checkout
 	br = branch
@@ -54,6 +56,9 @@ cmd = subl -n --wait \"$REMOTE\" \"$LOCAL\" --command \"sublimerge_diff_views {\
 	ui = true
 [credential]
 	helper = cache --timeout=3600
+	helper = osxkeychain
+	helper = 
+	helper = /usr/local/share/gcm-core/git-credential-manager
 [mergetool]
 	keeptemporaries = false
 	keepbackups = false
@@ -61,3 +66,5 @@ cmd = subl -n --wait \"$REMOTE\" \"$LOCAL\" --command \"sublimerge_diff_views {\
 	trustexitcode = false
 [web]
 	browser = chromium
+[credential "https://dev.azure.com"]
+	useHttpPath = true
