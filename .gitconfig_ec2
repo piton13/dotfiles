@@ -1,0 +1,23 @@
+[user]
+	name = Igor Mykhaylyuk
+	email = igor13luk@gmail.com
+[alias]
+    co = checkout
+	br = branch
+    cp = cherry-pick
+	ci = commit
+    ciam = commit --amend
+    cia = commit --amend --no-edit
+    dif = diff HEAD
+	st = status
+    rbi = !bash -c \"git rebase -i HEAD~${1:-2}\"
+    review = !bash -c \"git push origin HEAD:refs/for/${1:-develop}\"
+    rp = !bash -c \"git push origin HEAD\"
+    mpos = !bash -c \"git push gerrit HEAD\" -
+	last = log -1 --stat
+	cl = clone
+	unstage = reset HEAD --
+	dc = diff --cached
+	lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %Cblue<%an>%Creset' --abbrev-commit --date=relative --all
+[push]
+	default = current
