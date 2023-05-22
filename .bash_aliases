@@ -563,6 +563,9 @@ dev_cp_to() {
 }
 # alias dev_cp_to2='scp -i ~/dev_local.pem ./$file ubuntu@2-3-12-60-1.us-east-2.compute.amazonaws.com:$path'
 
+# SOME ALIASES FOR NODE.JS
+alias http_server_run='http-server ./dist -p $1'
+
 # SOME ALIASES FOR NPM
 # npm install --timing # to generate a npm-debug.log for installing packages
 # npm publish --timing # to generate a npm-debug.log for publishing packages
